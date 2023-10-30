@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { fetchDogBreeds, selectDogBreeds, sortedDogs } from '../redux/dogsSlice';
 
-const Filters = ({setSelectedBreed, age, setAge}) => {
+const Filters = ({setSelectedBreed, age, setAge, setBreedSort}) => {
     const dispatch = useDispatch();
     const dogBreeds = useSelector(selectDogBreeds);
 
@@ -15,8 +15,14 @@ const Filters = ({setSelectedBreed, age, setAge}) => {
     }, [dispatch]);
 
     const handleSortDropdown = (e) => {
-        const dropdownValue  = e.target.value;
-        dispatch(sortedDogs({ dropdown: dropdownValue }));
+        if (e.target.value === 'asc') {
+            setBreedSort(e.target.value)
+        } else if (e.target.value === 'desc') {
+            setBreedSort(e.target.value);
+        } else {
+            const dropdownValue = e.target.value;
+            dispatch(sortedDogs({ dropdown: dropdownValue }));
+        }
     }
 
   return (
@@ -32,14 +38,14 @@ const Filters = ({setSelectedBreed, age, setAge}) => {
         </div>
         <div className="sort-dropdown">
             <label>Sort By:</label>
-            <select name="" id="" onChange={handleSortDropdown}>
+            <select onChange={handleSortDropdown}>
                 <option value='none'></option>
                 <option value="nameAsc">Names: A-Z</option>
                 <option value="nameDesc">Names: Z-A</option>
                 <option value="ageAsc">Ages: Youngest-Oldest</option>
                 <option value="ageDesc">Ages: Oldest-Youngest</option>
-                <option value="breedAsc">Breed: A-Z</option>
-                <option value="breedDesc">Breed: Z-A</option>
+                <option name="breedSort" value="asc">Breed: A-Z</option>
+                <option name="breedSort" value="desc">Breed: Z-A</option>
             </select>
         </div>
         <div className="age-filter">
@@ -60,6 +66,7 @@ Filters.propTypes = {
     setSelectedBreed: PropTypes.func,
     setAge: PropTypes.func,
     age: PropTypes.object,
+    setBreedSort: PropTypes.func,
 }
 
 const FiltersContainer = styled.div`

@@ -59,11 +59,7 @@ const dogsSlice = createSlice({
                 state.data = state.data.sort((a, b) => a.age - b.age);
             } else if (dropdown === 'ageDesc') {
                 state.data = state.data.sort((a, b) => b.age - a.age);
-            } else if (dropdown === 'breedAsc') {
-                state.data = state.data.sort((a, b) => a.breed.localeCompare(b.breed));
-            }else if (dropdown === 'breedDesc') {
-                state.data = state.data.sort((a, b) => b.breed.localeCompare(a.breed));
-            }
+            } 
         },
         resetMatch: (state) => {
             state.match = null;
@@ -91,5 +87,5 @@ export const selectDogs = (state) => state.dogs.dogs;
 export const selectDogData = (state) => state.dogs.data;
 export const selectBreedSearch = (state) => state.dogs.searchState;
 export const selectMatch = (state) => state.dogs.match;
-export const { sortedDogs, resetMatch, breedSearch } = dogsSlice.actions;
+export const { sortedDogs, resetMatch, breedSearch, initialSort } = dogsSlice.actions;
 export default dogsSlice.reducer;

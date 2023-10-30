@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import DogInfo from '../components/dogs/DogInfo';
 import NavBar from '../components/NavBar';
-import { createMatch, fetchDogData, fetchDogs, resetMatch, selectDogData, selectDogs, selectMatch } from '../redux/dogsSlice';
+import { createMatch, fetchDogData, fetchDogs, resetMatch, selectDogData, selectDogs, selectMatch} from '../redux/dogsSlice';
 import Filters from '../components/Filters';
 import Pagination from '../components/Pagination';
 import LikedList from '../components/likedList/LikedList';
@@ -26,7 +26,8 @@ const Home = () => {
     const [age, setAge] = useState({
         ageMin: '',
         ageMax: '',
-    })
+    });
+    const [breedSort, setBreedSort] = useState('asc');
     const [likedList, setLikedList] = useState([]);
 
     // fetch dogs by filters
@@ -37,6 +38,7 @@ const Home = () => {
                 ageMin: age.ageMin,
                 ageMax: age.ageMax,
                 from: (currentSet - 1) * 25,
+                sort: `breed:${breedSort}`
             };
             if (selectedBreed === 'all') {
                 dispatch(fetchDogs());
@@ -46,7 +48,7 @@ const Home = () => {
             console.error('Unable to search for dogs', err)
             unableToGetData();
         }
-    }, [dispatch, selectedBreed, age.ageMin, age.ageMax, currentSet]);
+    }, [dispatch, selectedBreed, age.ageMin, age.ageMax, currentSet, breedSort]);
 
     // fetch dog data
     useEffect(() => {
@@ -110,6 +112,7 @@ const Home = () => {
         //for chrome, firefox, and other browsers
         document.documentElement.scrollTop = 0;
     }
+    console.log(breedSort)
 
   return (
     <HomeContainer>
@@ -117,7 +120,7 @@ const Home = () => {
         <ToastContainer />
         <h1>Find Your New Friend Today at the Fetch Dog Shelter 🐶!</h1>
         <div className="home-body">
-            <Filters setSelectedBreed={setSelectedBreed} age={age} setAge={setAge}/>
+            <Filters setSelectedBreed={setSelectedBreed} age={age} setAge={setAge} setBreedSort={setBreedSort}/>
                 <div className="dog-lists-contianer">
                     {likedList.length > 0 && <LikedList likedList={likedList} setLikedList={setLikedList} handleCreateMatch={handleCreateMatch} locations={filteredLocations}/>}
                     <div className="dog-cards">
