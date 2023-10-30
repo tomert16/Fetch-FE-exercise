@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { userLogout } from '../redux/usersSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-// import { selectBreedSearch } from '../redux/dogsSlice';
 const NavBar = ({ setSelectedBreed }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -126,7 +125,6 @@ const NavBarContainer = styled.div`
         }
     }
     .right {
-        /* gap: 1rem; */
         display: flex;
         align-items: center;
         margin: 2%;
@@ -166,7 +164,6 @@ const NavBarContainer = styled.div`
         }
         .show-search {
             border: 1px solid purple;
-            /* background-color: rgba(0, 0, 0, 0.6); */
             input {
                 width: 100%;
                 opacity: 1;
@@ -190,9 +187,6 @@ const NavBarContainer = styled.div`
         .account-menu {
             display: flex;
             flex-direction: column;
-            /* position: relative;
-            top: 2rem;
-            right: 30%; */
             .logout-btn {
                 background-color: transparent;
                 border: none;

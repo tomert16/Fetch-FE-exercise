@@ -1,9 +1,10 @@
 # Fetch-FE-exercise
-# React + Vite
+![alt text](./public/app-screenshot.png "Fetch Dog Shelter")
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# To start:
+- Fork and clone the application
+## Once forked and cloned:
+### Running Locally:
+- Navigate to the project directory with `cd fetch-fe-excercise`
+- Install all of the React dependencies with `npm install`
+- Start the frontend server by running the command `npm run dev`

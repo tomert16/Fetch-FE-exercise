@@ -7,11 +7,12 @@ import NavBar from '../components/NavBar';
 import { createMatch, fetchDogData, fetchDogs, resetMatch, selectDogData, selectDogs, selectMatch } from '../redux/dogsSlice';
 import Filters from '../components/Filters';
 import Pagination from '../components/Pagination';
-import LikedList from '../components/dogs/LikedList';
-import MatchCard from '../components/MatchCard';
+import LikedList from '../components/likedList/LikedList';
+import MatchCard from '../components/dogs/MatchCard';
 import { ToastContainer } from 'react-toastify';
 import { successfullyAdded, unableToCreateMatch, unableToGetData } from '../ui/Toastify';
 import { BsArrowUpCircle } from 'react-icons/bs';
+import { fetchLocations, selectLocations } from '../redux/locationsSlice';
 
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
     const dogs = useSelector(selectDogs);
     const dogData = useSelector(selectDogData);
     const matchedDog = useSelector(selectMatch);
+    const locations = useSelector(selectLocations);
     const [currentSet, setCurrentSet] = useState(1);
     const [selectedBreed, setSelectedBreed] = useState([]);
     const [age, setAge] = useState({
@@ -48,14 +50,24 @@ const Home = () => {
 
     // fetch dog data
     useEffect(() => {
-        if (dogs?.resultIds?.length > 0) {
-            const resultIds = dogs?.resultIds?.map((dog) => dog);
-            dispatch(fetchDogData(resultIds));
+        try {
+            if (dogs?.resultIds?.length > 0) {
+                const resultIds = dogs?.resultIds?.map((dog) => dog);
+                dispatch(fetchDogData(resultIds));
+            } 
+        }catch {
+            unableToGetData();
         }
     }, [dispatch, dogs]);
 
+    //fetch the locations of dogs
+    useEffect(() => {
+        const mappedDogData = dogData.map((dog) => dog.zip_code)
+        const zipCodes = [...new Set(mappedDogData)]
+        dispatch(fetchLocations(zipCodes));
+    }, [dispatch, dogData]);
 
-
+    //function to add dogs to liked list
     const addToLikedList = (dog) => {
         try {
             const likedDog = dog;
@@ -65,7 +77,7 @@ const Home = () => {
             console.log('Unable to add to liked list', err)
         }
     }
-
+    //function to find and create a match
     const handleCreateMatch = () => {
         try {
             dispatch(createMatch(likedList));
@@ -75,6 +87,10 @@ const Home = () => {
         }
     };
     
+    if (locations === undefined) return null;
+    const filteredLocations = locations.filter((location) => location !== null);
+
+
     // // Varibles and values for pagination functionality
     const indexOfLastDog = currentSet * dogs?.resultIds?.length;
     // // Varibles to handle next and previous sets
@@ -99,14 +115,14 @@ const Home = () => {
     <HomeContainer>
         <NavBar setSelectedBreed={setSelectedBreed}/>
         <ToastContainer />
-        <h1>Find Your New Friend Today!</h1>
+        <h1>Find Your New Friend Today at the Fetch Dog Shelter 🐶!</h1>
         <div className="home-body">
             <Filters setSelectedBreed={setSelectedBreed} age={age} setAge={setAge}/>
                 <div className="dog-lists-contianer">
-                    {likedList.length > 0 && <LikedList likedList={likedList} setLikedList={setLikedList} handleCreateMatch={handleCreateMatch}/>}
+                    {likedList.length > 0 && <LikedList likedList={likedList} setLikedList={setLikedList} handleCreateMatch={handleCreateMatch} locations={filteredLocations}/>}
                     <div className="dog-cards">
                         {dogData.map((dog) => (
-                            <DogInfo key={dog.id} dog={dog} addToLikedList={addToLikedList}/>
+                            <DogInfo key={dog.id} dog={dog} addToLikedList={addToLikedList} locations={filteredLocations}/>
                             ))}
                     </div>
                 </div> 
@@ -124,7 +140,7 @@ const Home = () => {
         <button className={document.body.scrollTop >= 20 || document.documentElement.scrollTop >= 20 ? 'display-btn' : 'hide-btn'} onClick={handleScrollToTop}>
             <BsArrowUpCircle />
         </button>
-        {matchedDog && <MatchCard matchedDog={matchedDog.match} closeMatchCard={closeMatchCard}/>}
+        {matchedDog && <MatchCard matchedDog={matchedDog.match} closeMatchCard={closeMatchCard} locations={filteredLocations}/>}
     </HomeContainer>
   )
 }
@@ -132,6 +148,15 @@ const Home = () => {
 const HomeContainer = styled.div`
     h1 {
         text-align: center;
+        color: white;
+        @media (min-width: 768px) {
+            font-size: 1.8rem;
+            width: 50%;
+            margin-left: 30%;
+        }
+        @media (max-width: 767px) {
+            font-size: 1.7rem;
+        }
     }
     .liked-dogs-list {
         display: flex;
@@ -213,7 +238,7 @@ const HomeContainer = styled.div`
     border: none;
     cursor: pointer;
     svg {
-      color: orange;
+      color: white;
       font-size: 3rem;
     }
   }

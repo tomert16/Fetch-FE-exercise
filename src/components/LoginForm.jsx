@@ -44,10 +44,6 @@ const LoginForm = () => {
             <button type="submit" className="submit">
                 Sign in
             </button>
-            <p className="signup-link">
-                No account?
-                <a href="">Sign up</a>
-            </p>
         </form>
     </FormContainer>
   )
@@ -120,16 +116,7 @@ const FormContainer = styled.div`
         width: 100%;
         border-radius: 0.5rem;
         text-transform: uppercase;
-    }
-    .signup-link {
-        color: #6B7280;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        text-align: center;
-    }
-
-    .signup-link a {
-        text-decoration: underline;
+        cursor: pointer;
     }
     .error-message {
         color: red;

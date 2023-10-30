@@ -2,19 +2,22 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { RiCloseCircleLine } from 'react-icons/ri';
 
-const MatchCard = ({ matchedDog, closeMatchCard }) => {
+const MatchCard = ({ matchedDog, closeMatchCard, locations }) => {
+    const dogLocation = locations.find((location) => location.zip_code === matchedDog.zip_code)
+
   return (
     <MatchCardContainer>
         <div className="card-container">
             <button className="exit-btn" onClick={closeMatchCard}>
                 <RiCloseCircleLine />
             </button>
-            <h1>We Found a Match🐶!!</h1>
+            <h1 className="match-prompt">We Found a Match🐶!!</h1>
             <img src={matchedDog.img} alt={matchedDog.name} />
             <div className="dog-info">
                 <h2>{matchedDog.name}</h2>
                 <p>Breed: {matchedDog.breed}</p>
                 <p>Age: {matchedDog.age}</p>
+                {dogLocation && <p>From: {dogLocation.city}, {dogLocation.state}</p>}
             </div>
         </div>
     </MatchCardContainer>
@@ -24,6 +27,7 @@ const MatchCard = ({ matchedDog, closeMatchCard }) => {
 MatchCard.propTypes = {
     matchedDog: PropTypes.object,
     closeMatchCard: PropTypes.func, 
+    locations: PropTypes.array,
 }
 
 const MatchCardContainer = styled.div`
@@ -40,6 +44,9 @@ const MatchCardContainer = styled.div`
     z-index: 1000;
     overflow-x: scroll;
     text-align: center;
+    .match-prompt{
+        color: black;
+    }
     .card-container {
         transform: translate(12%, 13%);
         background-color: white;

@@ -49,7 +49,6 @@ const dogsSlice = createSlice({
         },
         sortedDogs: (state, action) => {
             const {dropdown} = action.payload;
-            console.log(dropdown);
             if (dropdown === 'none') {
                 state.data;
             } else if (dropdown === 'nameAsc') {

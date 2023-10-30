@@ -30,5 +30,25 @@ LikedListPagination.propTypes = {
     prev: PropTypes.func,
 }
 
-const PaginationContainer = styled.div``;
+const PaginationContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    transform: translate(0, -800%);
+    .back-btn {
+        background: transparent;
+        border: none;
+        svg{
+            color: white;
+            font-size: 2rem;
+        }
+    }
+    .next-btn {
+        background: transparent;
+        border: none;
+        svg{
+            color: white;
+            font-size: 2rem;
+        }
+    }
+`;
 export default LikedListPagination;

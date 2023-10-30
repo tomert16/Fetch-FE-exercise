@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { successfullyRemoved } from '../../ui/Toastify';
-import LikedListPagination from '../LikedListPagination';
-import DogInfo from './DogInfo';
+import LikedListPagination from './LikedListPagination';
+import DogInfo from '../dogs/DogInfo';
 
-const LikedList = ({ likedList, setLikedList, handleCreateMatch }) => {
+const LikedList = ({ likedList, setLikedList, handleCreateMatch, locations }) => {
     const [amountOfCards, setAmountOfCards] = useState();
     const [currentSet, setCurrentSet] = useState(1);
 
@@ -25,7 +25,7 @@ const LikedList = ({ likedList, setLikedList, handleCreateMatch }) => {
     
     useEffect(() => {
         if (window.innerWidth >= 768) {
-            setAmountOfCards(4)
+            setAmountOfCards(3)
         } else {
             setAmountOfCards(1)
         }
@@ -34,13 +34,13 @@ const LikedList = ({ likedList, setLikedList, handleCreateMatch }) => {
   return (
     <LikedListContainer>
         <div className="border"></div>
-        <h2>Liked Dogs</h2>
-        <button onClick={handleCreateMatch}>Find Match</button>
+        <h2 className="list-header">Your Favorite Dogs</h2>
         <div className="liked-list">
             {likedList.slice(indexOfFirstCard, indexOfLastCard).map((dog) => (
-                <DogInfo key={dog.id} dog={dog} isLiked={true} removeFromLikedList={removeFromLikedList}/>
-            ))}
+                <DogInfo key={dog.id} dog={dog} isLiked={true} removeFromLikedList={removeFromLikedList} locations={locations}/>
+                ))}
         </div>
+        <button className="button" onClick={handleCreateMatch}>Find Match!</button>
         <LikedListPagination 
             amount={amountOfCards}
             total={likedList.length}
@@ -58,6 +58,7 @@ LikedList.propTypes = {
     likedList: PropTypes.array,
     handleCreateMatch: PropTypes.func,
     setLikedList: PropTypes.func,
+    locations: PropTypes.array,
 } 
 
 const LikedListContainer = styled.div`
@@ -66,11 +67,31 @@ const LikedListContainer = styled.div`
             display: flex;
         }
     }
+    .list-header {
+        text-align: center;
+        color: white;
+        font-size: 2.5rem;
+        text-decoration: underline;
+    }
     .border {
         border: 1px solid black;
         width: 75vw;
         margin-left: 5%;
         margin: 5%;
+    }
+    .button {
+        margin-left: 80%;
+        border-radius: 10px;
+        font-size: 1.4rem;
+        background-color: white;
+        border: none;
+        &:hover {
+            box-shadow: 0 0 60px 30px purple;
+        }
+        @media (max-width: 768px) {
+            margin-left:  30%;
+            margin-top: 5%;
+        }
     }
 `;
 export default LikedList;
