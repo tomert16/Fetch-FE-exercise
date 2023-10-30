@@ -44,9 +44,6 @@ const dogsSlice = createSlice({
         match: undefined,
     },
     reducers: {
-        breedSearch: (state, action) => {
-            state.searchState = action.payload;
-        },
         sortedDogs: (state, action) => {
             const {dropdown} = action.payload;
             if (dropdown === 'none') {
@@ -87,5 +84,5 @@ export const selectDogs = (state) => state.dogs.dogs;
 export const selectDogData = (state) => state.dogs.data;
 export const selectBreedSearch = (state) => state.dogs.searchState;
 export const selectMatch = (state) => state.dogs.match;
-export const { sortedDogs, resetMatch, breedSearch, initialSort } = dogsSlice.actions;
+export const { sortedDogs, resetMatch } = dogsSlice.actions;
 export default dogsSlice.reducer;
