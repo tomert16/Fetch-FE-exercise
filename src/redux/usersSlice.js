@@ -8,6 +8,14 @@ export const userLogin = createAsyncThunk(
         const req = await axiosInstance.post('/auth/login', reqBody);
         return req.data;
     }
+);
+
+export const userLogout = createAsyncThunk(
+    'users/userLogout',
+    async() => {
+        const req = await axiosInstance.post('/auth/logout');
+        return req.data;
+    }
 )
 
 const userSlice = createSlice({
@@ -19,6 +27,9 @@ const userSlice = createSlice({
         builder
             .addCase(userLogin.fulfilled, (state, action) => {
                 state.loggedInUser = action.payload;
+            })
+            .addCase(userLogout.fulfilled, (state) => {
+                state.loggedInUser = null;
             })
     }
 });
