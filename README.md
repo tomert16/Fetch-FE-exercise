@@ -1,6 +1,9 @@
 # Fetch-FE-exercise
 ![alt text](./public/app-screenshot.png "Fetch Dog Shelter")
 
+## Deployed website:
+https://iridescent-dieffenbachia-def0b3.netlify.app/
+
 # To start:
 - Fork and clone the application
 ## Once forked and cloned:
