@@ -14,6 +14,19 @@ export const successfullyAdded = (dog) => {
       });
   };
 
+  export const unableToAdd = (dog) => {
+    toast.error(`Unable to add ${dog.name} toy your liked list❌`, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+  };
+
 export const successfullyRemoved = (dog) => {
     toast.success(`Successfully removed ${dog.name} from your liked list ✅`, {
       position: "top-center",

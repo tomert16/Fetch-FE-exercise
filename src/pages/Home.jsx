@@ -10,7 +10,7 @@ import Pagination from '../components/Pagination';
 import LikedList from '../components/likedList/LikedList';
 import MatchCard from '../components/dogs/MatchCard';
 import { ToastContainer } from 'react-toastify';
-import { successfullyAdded, unableToCreateMatch, unableToGetData } from '../ui/Toastify';
+import { successfullyAdded, unableToAdd, unableToCreateMatch, unableToGetData } from '../ui/Toastify';
 import { BsArrowUpCircle } from 'react-icons/bs';
 import { fetchLocations, selectLocations } from '../redux/locationsSlice';
 
@@ -76,7 +76,7 @@ const Home = () => {
             setLikedList([...likedList, likedDog]);
             successfullyAdded(dog);
         } catch (err) {
-            console.log('Unable to add to liked list', err)
+            unableToAdd(dog)
         }
     }
     //function to find and create a match
@@ -111,8 +111,7 @@ const Home = () => {
         document.body.scrollTop = 0;
         //for chrome, firefox, and other browsers
         document.documentElement.scrollTop = 0;
-    }
-    console.log(breedSort)
+    };
 
   return (
     <HomeContainer>
