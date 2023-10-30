@@ -8,6 +8,6 @@
 - Create a copy of the sample.env file and name it .env
 - In the root directory in your terminal run `cp -p ./sample.env ./.env`
 ### Running Locally:
-- Navigate to the project directory with `cd fetch-fe-excercise`
+- Navigate to the project directory with `cd Fetch-FE-excercise`
 - Install all of the React dependencies with `npm install`
 - Start the frontend server by running the command `npm run dev`
